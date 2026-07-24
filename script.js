@@ -313,3 +313,31 @@ function isInViewport(element) {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
 }
+
+
+// ========== LAZY LOADING IMAGES ==========
+/**
+ * Lazy load images for better performance
+ */
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    document.querySelectorAll('img.lazy').forEach(img => imageObserver.observe(img));
+}
+
+// ========== CONSOLE WELCOME MESSAGE ==========
+/**
+ * Display welcome message in console
+ */
+console.log('%c👋 Welcome to My Portfolio!', 'font-size: 20px; color: #3B82F6; font-weight: bold;');
+console.log('%cThank you for visiting. Feel free to explore my work!', 'font-size: 14px; color: #06B6D4;');
+console.log('%cKeyboard Tip: Press "T" to toggle dark mode, or "?" for more shortcuts', 'font-size: 12px; color: #999;');
