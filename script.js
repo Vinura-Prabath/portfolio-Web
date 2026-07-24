@@ -86,3 +86,71 @@ function handleSubmit(event) {
         alert('Please fill in all fields');
     }
 }
+
+// ========== LOAD THEME PREFERENCE ==========
+/**
+ * Load and apply saved theme preference on page load
+ */
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+        toggleTheme();
+    }
+    
+    // Apply animations on load
+    applyScrollAnimations();
+});
+
+// ========== SCROLL ANIMATIONS ==========
+/**
+ * Apply fade-in animations to elements as they come into view
+ * Uses Intersection Observer API
+ */
+function applyScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeIn 0.6s ease-out';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all elements that should have animations
+    document.querySelectorAll('.project-card, .skill-card, .timeline-item').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// ========== NAVIGATION HIGHLIGHT ==========
+/**
+ * Highlight the current section in navigation based on scroll position
+ */
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section');
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.scrollY >= sectionTop - 200) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    // Update active navigation link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        
+        if (link.getAttribute('href').slice(1) === currentSection) {
+            link.classList.add('active');
+        }
+    });
+});
