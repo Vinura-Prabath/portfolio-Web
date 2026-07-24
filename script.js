@@ -225,3 +225,91 @@ function setupFormValidation() {
         });
     }
 }
+
+// Initialize form validation
+window.addEventListener('DOMContentLoaded', setupFormValidation);
+
+// ========== KEYBOARD NAVIGATION ==========
+/**
+ * Enable keyboard navigation for the site
+ */
+document.addEventListener('keydown', (e) => {
+    // Press '?' to show keyboard shortcuts
+    if (e.key === '?') {
+        showKeyboardShortcuts();
+    }
+    
+    // Press 'T' to toggle theme
+    if (e.key === 't' || e.key === 'T') {
+        toggleTheme();
+    }
+});
+
+/**
+ * Display keyboard shortcuts help
+ */
+function showKeyboardShortcuts() {
+    const shortcuts = `
+    Keyboard Shortcuts:
+    - T: Toggle dark/light mode
+    - ?: Show this help
+    - #home, #about, #skills, #projects, #experience, #contact: Jump to section (use # in address bar)
+    `;
+    alert(shortcuts);
+}
+
+// ========== PERFORMANCE MONITORING ==========
+/**
+ * Log performance metrics (development only)
+ */
+if (window.location.hostname === 'localhost') {
+    window.addEventListener('load', () => {
+        const perfData = window.performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log(`[Portfolio] Page load time: ${pageLoadTime}ms`);
+    });
+}
+
+// ========== UTILITY FUNCTIONS ==========
+
+/**
+ * Debounce function for performance optimization
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+/**
+ * Throttle function for performance optimization
+ */
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+/**
+ * Check if element is in viewport
+ */
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
