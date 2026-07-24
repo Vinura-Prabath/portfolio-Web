@@ -154,3 +154,74 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// ========== SCROLL TO TOP BUTTON ==========
+/**
+ * Show/hide scroll to top button based on scroll position
+ */
+window.addEventListener('scroll', () => {
+    const scrollButton = document.querySelector('.scroll-to-top');
+    
+    if (scrollButton) {
+        if (window.scrollY > 300) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
+    }
+});
+
+// ========== ACTIVE LINK STYLING ==========
+/**
+ * Add styling to active navigation link
+ */
+const style = document.createElement('style');
+style.textContent = `
+    .nav-links a.active {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 5px;
+    }
+    
+    .scroll-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        z-index: 999;
+        transition: all 0.3s;
+        font-size: 1.5rem;
+    }
+    
+    .scroll-to-top:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+    }
+`;
+document.head.appendChild(style);
+
+// ========== FORM INPUT VALIDATION ==========
+/**
+ * Real-time validation for form inputs
+ */
+function setupFormValidation() {
+    const emailInput = document.getElementById('email');
+    
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            const isValid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(this.value);
+            if (this.value && !isValid) {
+                this.style.borderColor = 'var(--error-color)';
+            } else {
+                this.style.borderColor = 'var(--border-color)';
+            }
+        });
+    }
+}
