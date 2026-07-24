@@ -220,3 +220,35 @@ nav.dark-mode {
     color: var(--primary-color);
     transform: translateY(-5px);
 }
+
+/* ========== CONTAINERS ========== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ========== SECTIONS ========== */
+section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+section.dark-mode {
+    border-bottom-color: var(--border-dark);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
